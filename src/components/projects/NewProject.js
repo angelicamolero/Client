@@ -1,6 +1,12 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
+import projectContext from '../../context/projects/projectContext';
 
 const NewProject = () => {
+
+    // Obtain state of form
+    const projectsContext  = useContext(projectContext);
+    const { form } = projectsContext;
+
 
     const [ project, saveProject ] = useState({
         name: ''
@@ -30,25 +36,31 @@ const NewProject = () => {
             <button
                 type="button"
                 className="btn btn-block btn-primary">
-                New Project</button>
+                New Project
+            </button>
 
-            <form 
-                className="form-new-project"
-                onSubmit={onSubmitProject}>
-                <input 
-                    type="text"
-                    className="input-text"
-                    placeholder="Project's Name"
-                    name="name"
-                    value={name}
-                    onChange={onChangeProject}
+            {
+                form ? (
+                <form 
+                    className="form-new-project"
+                    onSubmit={onSubmitProject}>
+                    <input 
+                        type="text"
+                        className="input-text"
+                        placeholder="Project's Name"
+                        name="name"
+                        value={name}
+                        onChange={onChangeProject}
+                        />
+                    <input 
+                        type="submit"
+                        className="btn btn-block btn-primary"
+                        value="Add Project"   
                     />
-                <input 
-                    type="submit"
-                    className="btn btn-block btn-primary"
-                    value="Add Project"   
-                />
-            </form>
+                </form>
+                )
+                : null 
+            }
         </Fragment>
     )
 }
