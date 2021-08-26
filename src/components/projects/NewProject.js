@@ -5,7 +5,7 @@ const NewProject = () => {
 
     // Obtain state of form
     const projectsContext  = useContext(projectContext);
-    const { form } = projectsContext;
+    const { form, showForm } = projectsContext;
 
 
     const [ project, saveProject ] = useState({
@@ -35,7 +35,8 @@ const NewProject = () => {
         <Fragment>
             <button
                 type="button"
-                className="btn btn-block btn-primary">
+                className="btn btn-block btn-primary"
+                onClick={() => showForm()}>
                 New Project
             </button>
 
