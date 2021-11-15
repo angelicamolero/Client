@@ -1,6 +1,18 @@
-import React  from 'react'
+import React, {useContext}  from 'react'
+import projectContext from '../../context/projects/projectContext';
 
 const FormTask = () => {
+
+    // Obtain state of projects
+    const projectsContext  = useContext(projectContext);
+    const { project } = projectsContext;
+
+    // if theres no selected project
+    if(!project) return null
+
+    // Array destructuring to get current project
+    const [currentProject] = project
+    
     return(
         <div className="form">
             <form>
