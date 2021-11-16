@@ -177,7 +177,7 @@ aside  {
   border-radius: .5rem;
   flex: 1;
   width: 100%;
-  font-family: ;
+  
 }
 
 /** TAREAS LISTADO **/
@@ -240,12 +240,12 @@ aside  {
   cursor: pointer;
   border: none;
 }
-.mensaje {
+.message {
   text-align: center;
   font-size: 1.6rem;
   border-radius: 0;
 }
-.mensaje:hover {
+.message:hover {
   cursor: default;
 }
 .completed,
