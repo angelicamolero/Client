@@ -1,7 +1,8 @@
 import React, { useReducer } from 'react'
 import TaskContext from './taskContext'
 import TaskReducer from './taskReducer'
-import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK, DELETE_TASK } from '../../types/index'
+import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK, DELETE_TASK,STATE_TASK, ACTUAL_TASK, UPDATE_TASK, CLEAN_TASK } from '../../types/index'
+import {v4 as uuid} from 'uuid';
 
 const TaskState = props => {
     const initialState = {
@@ -20,7 +21,8 @@ const TaskState = props => {
             { id: 12, name: 'Choose a Host', state: true, projectId: 2 }
         ],
         tasksproject: null,
-        errortask: false
+        errortask: false,
+        taskselected: null
     }
 
     const [state, dispatch] = useReducer(TaskReducer, initialState);
@@ -34,8 +36,9 @@ const TaskState = props => {
             payload: projectId
         })
     }
-
+    const uuid = require('uuid').v4
     const addTasks = task => {
+        task.id = uuid();
         dispatch ({
             type: ADD_TASK,
             payload: task
@@ -57,16 +60,52 @@ const TaskState = props => {
         })
     }
 
+    //change state of each task
+    const changeStateTask = task => {
+        dispatch({
+            type: STATE_TASK,
+            payload: task
+        })
+    }
+
+    //EXTRACT a task for edit
+    const saveActualTask = task => {
+        dispatch({
+            type: ACTUAL_TASK,
+            payload: task
+        })
+    }
+
+    //EDIT OR MODIFY TASK
+    const updateTask = task => {
+        dispatch({
+            type: UPDATE_TASK,
+            payload: task
+        })
+    }
+
+    //CLEAN TASK SELECTED
+    const cleanTask = () => {
+        dispatch({
+            type: CLEAN_TASK
+        })
+    }
+
     return(
         <TaskContext.Provider
             value={{
                 tasks: state.tasks,
                 tasksproject: state.tasksproject,
                 errortask: state.errortask,
+                taskselected: state.taskselected,
                 obtainTasks,
                 addTasks,
                 validateTask,
-                deleteTask
+                deleteTask,
+                changeStateTask,
+                saveActualTask,
+                updateTask,
+                cleanTask
             }}
         >
             {props.children}

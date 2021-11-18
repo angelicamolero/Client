@@ -9,7 +9,7 @@ const Task = ({task}) => {
     const { project } = projectsContext;
 
     const tasksContext = useContext(taskContext)
-    const { deleteTask, obtainTasks } = tasksContext;
+    const { deleteTask, obtainTasks, changeStateTask, saveActualTask } = tasksContext;
 
     //extract project
     const [ currentProject ] = project
@@ -21,6 +21,22 @@ const Task = ({task}) => {
         obtainTasks(currentProject.id);
     }
 
+    //function that modifies the state of tasks
+
+    const changeState = task => {
+        if(task.state) {
+            task.state = false;
+        } else {
+            task.state = true;
+        }
+        changeStateTask(task);
+    }
+
+    //add actual task when user needs to edit it
+    const selectTask = task => {
+        saveActualTask(task)
+    }
+
     return(
         <li className="task shadow">
             <p>{task.name}</p>
@@ -30,14 +46,16 @@ const Task = ({task}) => {
                 ? (
                     <button
                         type="button"
-                        className="completed">
+                        className="completed"
+                        onClick= {() => changeState(task)}>
                         Completed
                     </button>
                 )
                 : (
                     <button
                         type="button"
-                        className="incompleted">
+                        className="incompleted"
+                        onClick= {() => changeState(task)}>
                         Incompleted
                     </button>
                 ) 
@@ -47,7 +65,8 @@ const Task = ({task}) => {
             <div className="actions"> 
                 <button
                     type="button"
-                    className="btn btn-primary">
+                    className="btn btn-primary"
+                    onClick={() => saveActualTask(task)}>
                     Edit
                 </button>
 
