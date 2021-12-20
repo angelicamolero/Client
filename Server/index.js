@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 4000;
 server.use('/api/users', require('./routes/users'));
 server.use('/api/auth', require('./routes/auth'));
 server.use('/api/projects', require('./routes/projects'));
+server.use('/api/task', require('./routes/task'));
 
 //set main page
 //server.get('/', (req, res) => {
