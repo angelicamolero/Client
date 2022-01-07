@@ -25,7 +25,7 @@ const Login = () => {
     }
     
     return (
-        <div className="form-usuario">
+        <div className="form-user">
             <div className="container-form shadow-dark">
                 <h1>Sign In</h1>
                 <form 
