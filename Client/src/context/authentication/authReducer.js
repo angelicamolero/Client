@@ -1,16 +1,23 @@
 import { SUCCESFULL_REGISTER, ERROR_REGISTER, OBTAIN_USER, SUCESSFUL_LOGIN, ERROR_LOGIN, LOG_OUT } from "../../types";
 
-export default (state, action) => {
+const reducer = (state, action) => {
     switch(action.type) {
-        // case SHOW_ALERT :
-        //     return{
-        //         alert: action.payload
-        //     }
-        // case HIDE_ALERT:
-        //     return {
-        //         alert: null
-        //     }
+        case SUCCESFULL_REGISTER :
+            localStorage.setItem('token', action.payload.token);
+            return {
+                ...state,
+                authenticated: true,
+                message: null
+            }
+            case ERROR_REGISTER :
+                return {
+                    ...state,
+                    token: null,
+                    message: action.payload
+                }
         default:
             return state;
     }
 }
+
+export default reducer;

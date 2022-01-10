@@ -1,22 +1,36 @@
-import  React, { useContext, useState } from 'react';
+import  React, { useContext, useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import AlertContext from '../../context/alerts/alertContext';
+import AuthContext from '../../context/authentication/authContext';
 
-const NewAccount = () => {
+const NewAccount = (props) => {
     //get values from context
     const alertContext = useContext(AlertContext);
     const { alert, showAlert } = alertContext;
 
+    const authContext = useContext(AuthContext);
+    const { message, authenticated, registerUser} = authContext;
+
+    //in case that users authenticated or duplicated
+    useEffect(() => {
+        if(authenticated) {
+            props.history.push('/projects')
+        }
+        if(message){
+            showAlert(message.msg, message.category)
+        }
+    }, [message, authenticated, props.history])
+
     //sign in state
     const [ user, saveUser ] = useState({
         name: '',
-        email: '',
+        mail: '',
         password: '',
         confirm:''
     });
 
     //get from user
-    const { name, email, password, confirm } = user;
+    const { name, mail, password, confirm } = user;
 
     const onChange = (e) => {
         saveUser({
@@ -31,7 +45,7 @@ const NewAccount = () => {
 
         //validate no empty fields
         if( name.trim() === '' || 
-        email.trim() === '' || 
+        mail.trim() === '' || 
         password.trim() === '' || 
         confirm.trim() === '' ) {
             showAlert('All fields are required', 'alert-error');
@@ -48,6 +62,11 @@ const NewAccount = () => {
             return;
         }
         //take it to action
+        registerUser({
+            name,
+            mail,
+            password
+        })
     }
     
     return (
@@ -73,9 +92,9 @@ const NewAccount = () => {
                         <input 
                         type="email"
                         id="email"
-                        name="email"
+                        name="mail"
                         placeholder="Your email"
-                        value={email}
+                        value={mail}
                         onChange={onChange}
                         />
                     </div>
